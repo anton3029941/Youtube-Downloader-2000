@@ -5,7 +5,7 @@ to run programm you need python 3.8+
 
 Run file with python  
 
-And you need download cookies from youtube and put it in folder with file. To do this I use chrome extension "Get cookies.txt LOCALLY"  
+And you need download cookies from youtube, put it in folder with file and name it cookies.txt or cookies if you don't see file extensions. To do this I use chrome extension "Get cookies.txt LOCALLY"  
 
 if you can't paste the url, try changing your keyboard layout to English  
 
