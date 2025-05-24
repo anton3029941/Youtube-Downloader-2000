@@ -1,7 +1,15 @@
 import subprocess
 import tkinter as tk
 import threading
+import os
 
+
+cookies = False
+
+if os.path.exists("cookies.txt"):
+    cookies = True
+
+print("Cookies found:", cookies)
 
 # Start threading to avoid blocking the GUI
 def start_download():
@@ -13,28 +21,49 @@ def start_download():
 
 # Function to handle the download process
 def dl(url, mode, label):
+    global cookies
     label.config(text="Starting download...")
 
-    # Choosing the command based on the mode
-    if mode == "audio":
-        command = [
-            "yt-dlp",
-            "--format", "bestaudio/best",
-            "--extract-audio",
-            "--audio-format", "mp3",
-            "--audio-quality", "320K",
-            "--cookies", "cookies.txt",
-            "-o", "downloads/%(title)s.%(ext)s",
-            url
-        ]
+    # Choosing the command based on the mode and cookies existence
+    if cookies:
+        if mode == "audio":
+            print("cookies found, downloading audio")
+            command = [
+                "yt-dlp",
+                "--format", "bestaudio/best",
+                "--extract-audio",
+                "--audio-format", "mp3",
+                "--audio-quality", "320K",
+                "--cookies", "cookies.txt",
+                "-o", "downloads/%(title)s.%(ext)s",
+                url
+            ]
+        else:
+            command = [
+                "yt-dlp",
+                "--format", "bestvideo+bestaudio/best",
+                "--cookies", "cookies.txt",
+                "-o", "downloads/%(title)s.%(ext)s",
+                url
+            ]
     else:
-        command = [
-            "yt-dlp",
-            "--format", "bestvideo+bestaudio/best",
-            "--cookies", "cookies.txt",
-            "-o", "downloads/%(title)s.%(ext)s",
-            url
-        ]
+        if mode == "audio":
+            command = [
+                "yt-dlp",
+                "--format", "bestaudio/best",
+                "--extract-audio",
+                "--audio-format", "mp3",
+                "--audio-quality", "320K",
+                "-o", "downloads/%(title)s.%(ext)s",
+                url
+            ]
+        else:
+            command = [
+                "yt-dlp",
+                "--format", "bestvideo+bestaudio/best",
+                "-o", "downloads/%(title)s.%(ext)s",
+                url
+            ]
 
     # Output success or error message
     try:
