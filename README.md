@@ -10,7 +10,7 @@ Download yt-dlp with cmd:
   
 Run file with python:  
 ```
-  python /some path/main.py
+  python /some-path/main.py
 ```
   
 And you should download cookies from youtube to download videos with age limit or from your private playlist.  
